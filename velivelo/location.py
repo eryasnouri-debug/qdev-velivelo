@@ -1,9 +1,9 @@
-from enum import Enum
+import unittest
+from velivelo.location import horsForfait
 
-class Verdict(Enum):
-  SANS_DEPASSEMENT = 0,
-  AVEC_DEPASSEMENT = 1,
-  AMENDE = 2
+class TestHorsForfait(unittest.TestCase):
+    def testhorsforfaitcas1(self):
+        self.assertEqual(horsForfait(60, 90), "SansDépassement")
 
-def horsForfait(dureeLocation : int, tempsRestant : int) -> Verdict:
-  pass
+    def testhorsforfaitcas2(self):
+        self.assertEqual(horsForfait(60, 30), "AvecDépassement")
