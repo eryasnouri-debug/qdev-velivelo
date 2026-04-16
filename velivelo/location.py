@@ -1,16 +1,16 @@
-import unittest
-from velivelo.location import horsForfait
+from enum import Enum
 
-class TestHorsForfait(unittest.TestCase):
-    def testhorsforfaitcas1(self):
-        self.assertEqual(horsForfait(60, 90), "SansDepassement")
+class Verdict(Enum):
+    SANS_DEPASSEMENT = 0
+    AVEC_DEPASSEMENT = 1
+    AMENDE = 2
 
-    def testhorsforfaitcas2(self):
-        self.assertEqual(horsForfait(60, 30), "AvecDepassement")
-
-    def testhorsforfaitcas3(self):
-        self.assertEqual(horsForfait(241, 380), "Amende")
-
-    def testhorsforfaitcas4(self):
-        with self.assertRaises(ValueError):
-            horsForfait(0, 30)
+def horsForfait(dureeLocation : int, tempsRestant : int) -> Verdict:
+    if dureeLocation <= 0:
+        raise ValueError("duree de la location doit etre superieure a 0")
+    if dureeLocation > 240:
+        return Verdict.AMENDE
+    if dureeLocation <= tempsRestant:
+        return Verdict.SANS_DEPASSEMENT
+    
+    return Verdict.AVEC_DEPASSEMENT
